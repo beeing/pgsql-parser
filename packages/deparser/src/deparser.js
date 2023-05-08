@@ -1427,10 +1427,12 @@ export default class Deparser {
     }
 
     if (node.indexParams) {
-      output.push('(');
+      let expr = !!node.indexParams.expr; // fix for #96
+      output.push(expr ? '((' : '(');
       output.push(this.list(node.indexParams, ', ', '', context));
-      output.push(')');
+      output.push(expr ? '))' : ')');
     }
+
     if (node.indexIncludingParams) {
       output.push('INCLUDE (');
       output.push(this.list(node.indexIncludingParams, ', ', '', context));
